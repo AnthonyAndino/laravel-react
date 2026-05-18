@@ -21,10 +21,14 @@ class Post extends Model
     ];
 
     protected $casts = [
-        'published-at' => 'datetime'
+        'published_at' => 'datetime'
     ];
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class);
     }
 }
