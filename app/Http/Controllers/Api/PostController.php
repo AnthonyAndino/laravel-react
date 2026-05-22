@@ -62,7 +62,6 @@ class PostController extends Controller
             \Log::error('Post creation failed: ' .  $e->getMessage());
             return response()->json(['message' => 'Failed to create post:' .  $e->getMessage()], 500);
         }
-
     }
 
     /**
@@ -81,7 +80,6 @@ class PostController extends Controller
         }
 
         return response()->json($post->load('categories', 'user'));
-
     }
 
     /**
@@ -133,11 +131,12 @@ class PostController extends Controller
             return response()->json($post->load('categories', 'user'));
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to update post: ' . $e->getMessage()], 500);
-        } 
+        }
     }
 
 
-    public function publish (Request $request, Post $post) {
+    public function publish(Request $request, Post $post)
+    {
         $post->status = 'published';
         $post->published_at = now();
         $post->save();
@@ -156,7 +155,8 @@ class PostController extends Controller
         return response()->json(['message' => 'Post deleted successfully']);
     }
 
-    public function uploadImage (Request $request, Post $post) {
+    public function uploadImage(Request $request, Post $post)
+    {
         $request->validate([
             'image' => 'required|image|max:5120',
         ]);
@@ -184,5 +184,4 @@ class PostController extends Controller
 
         return response()->json(['message' => 'No image file provided'], 400);
     }
-
 }
