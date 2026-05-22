@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\DashboardControlller;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\PostController;
 use Illuminate\Http\Request;
@@ -12,6 +14,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::get('/categories', [CategoryController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -24,4 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/posts', PostController::class)->except(['index', 'show']);
     Route::post('posts/{post}/publish', [PostController::class, 'publish']);
     Route::post('posts/{post}/image', [PostController::class, 'uploadImage']);
+
+    Route::apiResource('/categories', CategoryController::class)->except(['index']);
+
+    Route::get('/dashboard', [DashboardControlller::class, 'index']);
 });
